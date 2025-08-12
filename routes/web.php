@@ -74,3 +74,25 @@ Route::get('/services/digital-marketing', function () {
 Route::get('/services/saas-development', function () {
     return view('services.saas-development');
 })->name('services.saas');
+
+// Clear route for clearing data
+Route::get('/clear', function () {
+
+
+    // Clear cache
+    \Illuminate\Support\Facades\Cache::flush();
+
+    // Clear config cache
+    \Illuminate\Support\Facades\Artisan::call('config:clear');
+
+    // Clear route cache
+    \Illuminate\Support\Facades\Artisan::call('route:clear');
+
+    // Clear view cache
+    \Illuminate\Support\Facades\Artisan::call('view:clear');
+
+    return response()->json([
+        'success' => true,
+        'message' => 'All data cleared successfully!'
+    ]);
+})->name('clear');
